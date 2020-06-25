@@ -4,22 +4,28 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float runSpeed;
-    public float jumpSpeed;
-    public float doulbJumpSpeed;
+    public float runSpeed;  //移动速度
+    public float jumpSpeed; //跳跃速度
+    public float doulbJumpSpeed;    //二段跳速度
     public float climbSpeed;
     public float restoreTime;
+    public float floatSpeed;    //上下漂浮速度
+
+    public int itemAmount;
+    public Item[] items; //人物的道具
 
     private Rigidbody2D myRigidbody;
-    private Animator myAnim;
+    private Animator myAnim;    //人物动画
     private BoxCollider2D myFeet;   //人物脚部的触发器
-    private bool isGround;  //接触地面
-    private bool canDoubleJump;
+    private bool isGround;  //是否接触地面
+    private bool canDoubleJump; //二段跳的判断
     private bool isOneWayPlatform;
+    private int currentItemId;    //当前使用的引力石道具的ID
 
     private bool isLadder;
     private bool isClimbing;
 
+    private bool isFloating;
     private bool isJumping;
     private bool isFalling;
     private bool isDoubleJumping;
@@ -31,9 +37,11 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
-        //myAnim = GetComponent<Animator>();
-        myFeet = GetComponent<BoxCollider2D>();
+        myAnim = GetComponent<Animator>();    //设置人物的动画控制器
+        myFeet = GetComponent<BoxCollider2D>(); //脚步触发器
         playerGravity = myRigidbody.gravityScale;
+
+        currentItemId = 0;//设置第0个道具为当前道具
     }
 
     // Update is called once per frame
@@ -47,6 +55,9 @@ public class PlayerController : MonoBehaviour
             Jump();
             //Climb();
             //Attack();
+            SwitchItem();
+            Floating();
+            UseStoneItem(); //监听道具使用
             
             CheckGrounded();   // 检查是否与地面接触
             //CheckLadder();
@@ -94,6 +105,28 @@ public class PlayerController : MonoBehaviour
         myRigidbody.velocity = playerVel;
         bool plyerHasXAxisSpeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
         //myAnim.SetBool("Run", plyerHasXAxisSpeed);
+    }
+
+    //使用引力石道具
+    void UseStoneItem() {
+
+    }
+
+    //切换道具
+    void SwitchItem() {
+        int newId = (currentItemId+1)% itemAmount;
+        currentItemId = newId;
+        //跟新UI
+
+    }
+
+    //人物使用重力石后在空中的漂浮移动，上下移动
+    void Floating() {
+        if (isFloating) {
+            float moveDir = Input.GetAxis("Vertical");
+            Vector2 playerVel = new Vector2(myRigidbody.velocity.x, moveDir * runSpeed);
+        }
+       
     }
 
     void Jump()
