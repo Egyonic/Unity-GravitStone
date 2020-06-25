@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -41,6 +42,8 @@ public class PlayerController : MonoBehaviour
         myFeet = GetComponent<BoxCollider2D>(); //脚步触发器
         playerGravity = myRigidbody.gravityScale;
 
+        //道具相关的设置
+        ItemUI.currentItem = items[0];
         currentItemId = 0;//设置第0个道具为当前道具
     }
 
@@ -58,7 +61,9 @@ public class PlayerController : MonoBehaviour
             SwitchItem();
             Floating();
             UseStoneItem(); //监听道具使用
-            
+            SwitchItemStatus();//切换道具状态
+
+
             CheckGrounded();   // 检查是否与地面接触
             //CheckLadder();
             //SwitchAnimation();
@@ -114,9 +119,20 @@ public class PlayerController : MonoBehaviour
 
     //切换道具
     void SwitchItem() {
-        int newId = (currentItemId+1)% itemAmount;
-        currentItemId = newId;
-        //跟新UI
+        if (Input.GetButtonDown("SwitchStone")) {
+            int newId = (currentItemId + 1) % itemAmount;
+            currentItemId = newId;
+            ItemUI.currentItem = items[newId];//UI跟新
+        }
+
+    }
+
+    void SwitchItemStatus() {
+        if (Input.GetButtonDown("SwitchItemStatus")) {
+            items[currentItemId].status = !items[currentItemId].status;
+            //看状态跟新时UI那边的的item是指向同一个对象的，所以不需要重新赋值
+            //ItemUI.currentItem = items[newId];//UI跟新
+        }
 
     }
 
@@ -131,7 +147,7 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        Debug.Log(isGround);
+        //Debug.Log(isGround);
         if (Input.GetButtonDown("Jump"))
         {
             if(isGround)
