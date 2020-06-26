@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
         //道具相关的设置
         ItemUI.currentItem = items[0];
         GravityAreaController.currentItem = items[0];
+        TranslateTrigger.spaceStone = items[1];
         currentItemId = 0;//设置第0个道具为当前道具
 
     }
@@ -64,7 +65,6 @@ public class PlayerController : MonoBehaviour
             else {
                 Floating(); //悬浮移动
             }
-
 
             //Attack();
             SwitchItem();
@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
      人物控制器这边只需要实时的在SwitchItem方法中传递当前使用的物品过去就行
          */
 
-    //使用引力石道具
+    //使用引力石道具，改变道具是否使用的状态
     void UseStoneItem() {
         if (Input.GetButtonDown("UseStone")) {
             Item item = items[currentItemId];   //获取当前的物品对象
@@ -142,6 +142,8 @@ public class PlayerController : MonoBehaviour
             ItemUI.currentItem = items[newId];//UI跟新
             // 跟新重力区域控制器的物品信息
             GravityAreaController.currentItem = items[newId];
+            // 传送装置保存的物品信息
+            //TranslateTrigger.spaceStone = items[newId];
         }
 
     }
