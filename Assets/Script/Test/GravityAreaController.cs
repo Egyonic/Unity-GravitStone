@@ -49,7 +49,7 @@ public class GravityAreaController : MonoBehaviour
     private void OnTriggerStay2D(Collider2D other) {
         // 判断进入触发区的是否是玩家
         if (other.CompareTag("Player")) {
-            Debug.Log("玩家进入有效范围");
+            //Debug.Log("玩家进入有效范围");
             // 判断玩家是否使用了重力石头且模式为操作环境物体
             if (currentItem.name == "重力石" && currentItem.status == false
                 && currentItem.isUsing) {

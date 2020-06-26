@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed; //跳跃速度
     public float doulbJumpSpeed;    //二段跳速度
     public float restoreTime;
-    public float floatSpeed;    //上下漂浮速度
+    public float floatSpeed;    //漂浮速度
+    public float floatingGravity;  //飘浮时的重力
 
     public int itemAmount;  //道具总数
     public Item[] items; //人物的道具，在Inspector的人物的该脚本组件中编辑
@@ -25,7 +26,7 @@ public class PlayerController : MonoBehaviour
     //是否进入了使用重力石改变其他物体中立，移动方向的状态
     private bool isInStoneChangeStatus; 
 
-    private bool isFloating;
+    private bool isFloating;    //玩家是否在悬浮
     private bool isJumping;
     private bool isFalling;
     private bool isDoubleJumping;
@@ -40,11 +41,13 @@ public class PlayerController : MonoBehaviour
         myAnim = GetComponent<Animator>();    //设置人物的动画控制器
         myFeet = GetComponent<BoxCollider2D>(); //脚步触发器
         playerGravity = myRigidbody.gravityScale;
+        isFloating = false;
 
         //道具相关的设置
         ItemUI.currentItem = items[0];
         GravityAreaController.currentItem = items[0];
         currentItemId = 0;//设置第0个道具为当前道具
+
     }
 
     // Update is called once per frame
@@ -54,8 +57,14 @@ public class PlayerController : MonoBehaviour
         {
             //CheckAirStatus();
             Flip(); //实现左右翻转
-            Run();
-            Jump();
+            if (!isFloating) {
+                Run();  //正常移动
+                Jump();
+            }
+            else {
+                Floating(); //悬浮移动
+            }
+
 
             //Attack();
             SwitchItem();
@@ -63,7 +72,7 @@ public class PlayerController : MonoBehaviour
             UseStoneItem(); //监听道具使用
             SwitchItemStatus();//切换道具状态
 
-
+            CheckFloating();    //玩家是否对自己使用了重力，处于悬浮状态
             CheckGrounded();   // 检查是否与地面接触
             
             //SwitchAnimation();
@@ -79,6 +88,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    // 左右移动时角色的左右翻转
     void Flip()
     {
         bool plyerHasXAxisSpeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
@@ -116,19 +126,19 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("UseStone")) {
             Item item = items[currentItemId];   //获取当前的物品对象
             item.isUsing = !item.isUsing;   //切换物品的使用状态
-            if (item.name == "空间石"){
-
-            }
+            
         }
     }
-
 
 
     //切换道具
     void SwitchItem() {
         if (Input.GetButtonDown("SwitchStone")) {
+            // 先关闭原来道具的效果，在切换
+            items[currentItemId].isUsing = false;
             int newId = (currentItemId + 1) % itemAmount;
             currentItemId = newId;
+
             ItemUI.currentItem = items[newId];//UI跟新
             // 跟新重力区域控制器的物品信息
             GravityAreaController.currentItem = items[newId];
@@ -136,6 +146,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    // 改变道具的使用对象，true为对自己，false为对环境
     void SwitchItemStatus() {
         if (Input.GetButtonDown("SwitchItemStatus")) {
             items[currentItemId].status = !items[currentItemId].status;
@@ -145,11 +156,32 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    //检查玩家是否对自己使用了重力，来改变是否处于悬浮状态
+    void CheckFloating() {
+        if (items[currentItemId].name == "重力石" && items[currentItemId].isUsing
+            && items[currentItemId].status) {
+            isFloating = true;
+            myRigidbody.gravityScale = floatingGravity; //设置低重力
+        }
+        else {
+            isFloating = false;
+            myRigidbody.gravityScale = playerGravity;   //重置重力
+        }
+            
+        //Debug.Log("漂浮状态: "+isFloating);
+    }
+
     //人物使用重力石后在空中的漂浮移动，上下移动
     void Floating() {
+        // 玩家悬浮状态下的移动控制
         if (isFloating) {
-            float moveDir = Input.GetAxis("Vertical");
-            Vector2 playerVel = new Vector2(myRigidbody.velocity.x, moveDir * runSpeed);
+            
+            float moveX = Input.GetAxis("Horizontal");
+            float moveY = Input.GetAxis("Vertical");
+            //Vector2 move = new Vector2(moveX, moveY);
+            Vector2 playerVel = new Vector2(moveX * floatSpeed, moveY * floatSpeed);
+            myRigidbody.velocity = playerVel;
+
         }
        
     }

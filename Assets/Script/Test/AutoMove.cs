@@ -26,8 +26,8 @@ public class AutoMove : MonoBehaviour
 
     private void FixedUpdate() {
         syncSpeedAndDireaction();
-        Vector3 left = new Vector2(speedX, speedY);
-        rigidbody2D.MovePosition(transform.position + left * Time.deltaTime);
+        Vector3 move = new Vector2(speedX, speedY);
+        rigidbody2D.MovePosition(transform.position + move * Time.deltaTime);
 
     }
 
