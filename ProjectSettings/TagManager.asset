@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CameraShake
   - Enemy
+  - effectAreaTrigger
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - Background
   - Ground
   - Character
-  - MovingPlatform
-  - OneWayPlatform
+  - GravityAreaConstrain
+  - 
   - 
   - 
   - 
