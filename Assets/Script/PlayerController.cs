@@ -8,12 +8,11 @@ public class PlayerController : MonoBehaviour
     public float runSpeed;  //移动速度
     public float jumpSpeed; //跳跃速度
     public float doulbJumpSpeed;    //二段跳速度
-    public float climbSpeed;
     public float restoreTime;
     public float floatSpeed;    //上下漂浮速度
 
-    public int itemAmount;
-    public Item[] items; //人物的道具
+    public int itemAmount;  //道具总数
+    public Item[] items; //人物的道具，在Inspector的人物的该脚本组件中编辑
 
     private Rigidbody2D myRigidbody;
     private Animator myAnim;    //人物动画
@@ -23,8 +22,8 @@ public class PlayerController : MonoBehaviour
     private bool isOneWayPlatform;
     private int currentItemId;    //当前使用的引力石道具的ID
 
-    private bool isLadder;
-    private bool isClimbing;
+    //是否进入了使用重力石改变其他物体中立，移动方向的状态
+    private bool isInStoneChangeStatus; 
 
     private bool isFloating;
     private bool isJumping;
@@ -44,6 +43,7 @@ public class PlayerController : MonoBehaviour
 
         //道具相关的设置
         ItemUI.currentItem = items[0];
+        GravityAreaController.currentItem = items[0];
         currentItemId = 0;//设置第0个道具为当前道具
     }
 
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
             Flip(); //实现左右翻转
             Run();
             Jump();
-            //Climb();
+
             //Attack();
             SwitchItem();
             Floating();
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
 
             CheckGrounded();   // 检查是否与地面接触
-            //CheckLadder();
+            
             //SwitchAnimation();
             //OneWayPlatformCheck();
         }
@@ -74,16 +74,10 @@ public class PlayerController : MonoBehaviour
     void CheckGrounded()
     {
         isGround = myFeet.IsTouchingLayers(LayerMask.GetMask("Ground")) ||
-                   myFeet.IsTouchingLayers(LayerMask.GetMask("MovingPlatform")) ||
                    myFeet.IsTouchingLayers(LayerMask.GetMask("OneWayPlatform"));
         isOneWayPlatform = myFeet.IsTouchingLayers(LayerMask.GetMask("OneWayPlatform"));
     }
 
-    void CheckLadder()
-    {
-        isLadder = myFeet.IsTouchingLayers(LayerMask.GetMask("Ladder"));
-        //Debug.Log("isLadder:" + isLadder);
-    }
 
     void Flip()
     {
@@ -112,10 +106,23 @@ public class PlayerController : MonoBehaviour
         //myAnim.SetBool("Run", plyerHasXAxisSpeed);
     }
 
+    /*
+     重力式改变区域内重力移动物体的功能放到了GravityAreaController中来实现，
+     人物控制器这边只需要实时的在SwitchItem方法中传递当前使用的物品过去就行
+         */
+
     //使用引力石道具
     void UseStoneItem() {
+        if (Input.GetButtonDown("UseStone")) {
+            Item item = items[currentItemId];   //获取当前的物品对象
+            item.isUsing = !item.isUsing;   //切换物品的使用状态
+            if (item.name == "空间石"){
 
+            }
+        }
     }
+
+
 
     //切换道具
     void SwitchItem() {
@@ -123,6 +130,8 @@ public class PlayerController : MonoBehaviour
             int newId = (currentItemId + 1) % itemAmount;
             currentItemId = newId;
             ItemUI.currentItem = items[newId];//UI跟新
+            // 跟新重力区域控制器的物品信息
+            GravityAreaController.currentItem = items[newId];
         }
 
     }
@@ -170,53 +179,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Climb()
-    {
-        float moveY = Input.GetAxis("Vertical");
-
-        if(isClimbing)
-        {
-            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, moveY * climbSpeed);
-            canDoubleJump = false;
-        }
-
-        if (isLadder)        
-        {            
-            if (moveY > 0.5f || moveY < -0.5f)
-            {
-                myAnim.SetBool("Jump", false);
-                myAnim.SetBool("DoubleJump", false);
-                myAnim.SetBool("Climbing", true);
-                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, moveY * climbSpeed);
-                myRigidbody.gravityScale = 0.0f;
-            }
-            else
-            {
-                if (isJumping || isFalling || isDoubleJumping || isDoubleFalling)
-                {
-                    myAnim.SetBool("Climbing", false);
-                }
-                else
-                {
-                    myAnim.SetBool("Climbing", false);
-                    myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 0.0f);
-                    
-                }
-            }
-        }
-        else
-        {
-            myAnim.SetBool("Climbing", false);
-            myRigidbody.gravityScale = playerGravity;
-        }
-
-        if (isLadder && isGround)
-        {
-            myRigidbody.gravityScale = playerGravity;
-        }
-
-        //Debug.Log("myRigidbody.gravityScale:"+ myRigidbody.gravityScale);
-    }
 
     //void Attack()
     //{
@@ -288,7 +250,7 @@ public class PlayerController : MonoBehaviour
         isFalling = myAnim.GetBool("Fall");
         isDoubleJumping = myAnim.GetBool("DoubleJump");
         isDoubleFalling = myAnim.GetBool("DoubleFall");
-        isClimbing = myAnim.GetBool("Climbing");
+        //isClimbing = myAnim.GetBool("Climbing");
         //Debug.Log("isJumping:" + isJumping);
         //Debug.Log("isFalling:" + isFalling);
         //Debug.Log("isDoubleJumping:" + isDoubleJumping);
