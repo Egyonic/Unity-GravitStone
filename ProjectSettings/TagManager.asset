@@ -47,7 +47,7 @@ TagManager:
   - name: background
     uniqueID: 3068727433
     locked: 0
-  - name: forceground
+  - name: foreground
     uniqueID: 1148078719
     locked: 0
   - name: center
