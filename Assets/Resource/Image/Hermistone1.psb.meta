@@ -42,7 +42,7 @@ ScriptedImporter:
     textureType: 8
     textureShape: 1
     singleChannelComponent: 0
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 0
@@ -97,7 +97,7 @@ ScriptedImporter:
       y: 224
       width: 7
       height: 19
-    spriteID: 6df960836e93e7741babe4cdd3bcb38a
+    spriteID: deb628f5ecb26b144bfb9417b3a54b47
     internalID: 0
     spriteBone: []
     spriteOutline: []
@@ -119,7 +119,7 @@ ScriptedImporter:
       y: 4
       width: 133
       height: 118
-    spriteID: e7e8c7057f15c9049901c68551bbdbe3
+    spriteID: 08ed880d6f8b0c140a481f95b4c2653d
     internalID: 0
     spriteBone: []
     spriteOutline: []
@@ -141,7 +141,7 @@ ScriptedImporter:
       y: 130
       width: 39
       height: 86
-    spriteID: ec50532b0bd15634190e00c92925b91c
+    spriteID: 72661b7f4b0eb9947ba289f49c354cc9
     internalID: 0
     spriteBone: []
     spriteOutline: []
@@ -163,7 +163,7 @@ ScriptedImporter:
       y: 130
       width: 44
       height: 76
-    spriteID: 8ed1e5a25591a7046bedf94310f7ad32
+    spriteID: 62c118d22b02ab940a52a510603491a5
     internalID: 0
     spriteBone: []
     spriteOutline: []
@@ -185,7 +185,7 @@ ScriptedImporter:
       y: 4
       width: 64
       height: 98
-    spriteID: e02e059dee30d9e44a97d48e78d08799
+    spriteID: 46a767c90e69c944c815f3069e386c74
     internalID: 0
     spriteBone: []
     spriteOutline: []
@@ -196,10 +196,21 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 140, y: -38}
-  platformSettings: []
+  platformSettings:
+  - name: Default
+    overridden: 1
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
   mosaicLayers: 1
   documentPivot: {x: 0, y: 0}
-  documentAlignment: 7
+  documentAlignment: 0
   importHiddenLayers: 0
   importedTextureWidth: 256
   importedTextureHeight: 256
@@ -219,35 +230,35 @@ ScriptedImporter:
     spriteName: eye
     isGroup: 0
     parentIndex: -1
-    spriteID: 6df960836e93e7741babe4cdd3bcb38a
+    spriteID: deb628f5ecb26b144bfb9417b3a54b47
     layerID: 6
     mosaicPosition: {x: 4, y: 224}
   - name: body
     spriteName: body
     isGroup: 0
     parentIndex: -1
-    spriteID: e7e8c7057f15c9049901c68551bbdbe3
+    spriteID: 08ed880d6f8b0c140a481f95b4c2653d
     layerID: 5
     mosaicPosition: {x: 4, y: 4}
   - name: third feet
     spriteName: third feet
     isGroup: 0
     parentIndex: -1
-    spriteID: ec50532b0bd15634190e00c92925b91c
+    spriteID: 72661b7f4b0eb9947ba289f49c354cc9
     layerID: 4
     mosaicPosition: {x: 4, y: 130}
   - name: second feet
     spriteName: second feet
     isGroup: 0
     parentIndex: -1
-    spriteID: 8ed1e5a25591a7046bedf94310f7ad32
+    spriteID: 62c118d22b02ab940a52a510603491a5
     layerID: 3
     mosaicPosition: {x: 51, y: 130}
   - name: first feet
     spriteName: first feet
     isGroup: 0
     parentIndex: -1
-    spriteID: e02e059dee30d9e44a97d48e78d08799
+    spriteID: 46a767c90e69c944c815f3069e386c74
     layerID: 2
     mosaicPosition: {x: 145, y: 4}
   characterData:
