@@ -15,16 +15,17 @@ public class PlayerController : MonoBehaviour
     public int itemAmount;  //道具总数
     public Item[] items; //人物的道具，在Inspector的人物的该脚本组件中编辑
 
+    private PlayerHealth playerHealth;  //控制玩家血量的组件
     private Rigidbody2D myRigidbody;
     private Animator myAnim;    //人物动画
     private BoxCollider2D myFeet;   //人物脚部的触发器
     private bool isGround;  //是否接触地面
     private bool canDoubleJump; //二段跳的判断
-    private bool isOneWayPlatform;
+
     private int currentItemId;    //当前使用的引力石道具的ID
 
     //是否进入了使用重力石改变其他物体中立，移动方向的状态
-    private bool isInStoneChangeStatus; 
+    //private bool isInStoneChangeStatus; 
 
     private bool isFloating;    //玩家是否在悬浮
     private bool isJumping;
@@ -40,13 +41,14 @@ public class PlayerController : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();    //设置人物的动画控制器
         myFeet = GetComponent<BoxCollider2D>(); //脚步触发器
+        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>(); //获得血量控制器
         playerGravity = myRigidbody.gravityScale;
         isFloating = false;
 
         //道具相关的设置
         ItemUI.currentItem = items[0];
         GravityAreaController.currentItem = items[0];
-        TranslateTrigger.spaceStone = items[1];
+        TranslateTrigger.spaceStone = items[1]; //设置传送装置类对空间石的引用
         currentItemId = 0;//设置第0个道具为当前道具
 
     }
@@ -84,7 +86,7 @@ public class PlayerController : MonoBehaviour
     {
         isGround = myFeet.IsTouchingLayers(LayerMask.GetMask("Ground")) ||
                    myFeet.IsTouchingLayers(LayerMask.GetMask("OneWayPlatform"));
-        isOneWayPlatform = myFeet.IsTouchingLayers(LayerMask.GetMask("OneWayPlatform"));
+        
     }
 
 
@@ -126,7 +128,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("UseStone")) {
             Item item = items[currentItemId];   //获取当前的物品对象
             item.isUsing = !item.isUsing;   //切换物品的使用状态
-            
+
+            //回复药水的处理，要检查数量是否不为0
+            if (item.name=="回复药水" && item.count>0) {
+                playerHealth.HealPlayer();  //回复玩家血量
+                item.count--;
+            }
         }
     }
 
@@ -255,20 +262,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OneWayPlatformCheck()
-    {
-        if(isGround && gameObject.layer != LayerMask.NameToLayer("Player"))
-        {
-            gameObject.layer = LayerMask.NameToLayer("Player");
-        }        
 
-        float moveY = Input.GetAxis("Vertical");
-        if (isOneWayPlatform && moveY < -0.1f)
-        {
-            gameObject.layer = LayerMask.NameToLayer("OneWayPlatform");
-            Invoke("RestorePlayerLayer", restoreTime);
-        }
-    }
 
     void RestorePlayerLayer()
     {

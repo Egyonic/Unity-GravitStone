@@ -168,18 +168,27 @@ MonoBehaviour:
   restoreTime: 2
   floatSpeed: 5
   floatingGravity: 0
-  itemAmount: 2
+  healValue: 1
+  itemAmount: 3
   items:
   - id: 0
     name: "\u91CD\u529B\u77F3"
+    count: 1
     status: 0
     isUsing: 0
     sprite: {fileID: 21300000, guid: 608bcdaf2b333544b9e347581b9fd8ec, type: 3}
   - id: 1
     name: "\u7A7A\u95F4\u77F3"
+    count: 1
     status: 0
     isUsing: 0
     sprite: {fileID: 21300000, guid: 1889923601f698b4191169ee46e2d4cb, type: 3}
+  - id: 2
+    name: "\u56DE\u590D\u836F\u6C34"
+    count: 2
+    status: 0
+    isUsing: 0
+    sprite: {fileID: 21300000, guid: af7c123cb1d14e04f9faf77a30d22b06, type: 3}
 --- !u!114 &8839371157230761777
 MonoBehaviour:
   m_ObjectHideFlags: 0
