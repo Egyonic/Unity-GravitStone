@@ -48,7 +48,7 @@ public class EnemyMonster : Enemy
                 waitTime -= Time.deltaTime;
                 
             }
-        }
+        }//还在移动的过程中
         else {
             myAnim.SetBool("IsWalk", true);
         }

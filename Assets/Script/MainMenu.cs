@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
     public Text progressText;
     public void PlayGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("SeaWorld");
     }
 
     public void LoadLevel(int sceneIndex)

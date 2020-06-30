@@ -6,12 +6,9 @@ public abstract class Enemy : MonoBehaviour
 {
     public int health;
     public int damage;
-    //public float flashTime;
 
     public Animator myAnim;    //动画组件
 
-    //private SpriteRenderer sr; 
-    //private Color originalColor;
     private PlayerHealth playerHealth;
 
     // Start is called before the first frame update
@@ -19,8 +16,7 @@ public abstract class Enemy : MonoBehaviour
     {
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
         myAnim = GetComponent<Animator>();
-        //sr = GetComponent<SpriteRenderer>();
-        //originalColor = sr.color;
+
     }
 
     // Update is called once per frame
@@ -36,7 +32,6 @@ public abstract class Enemy : MonoBehaviour
     {
        
         health -= damage;
-        //FlashColor(flashTime);
 
         //GameController.camShake.Shake();
     }
