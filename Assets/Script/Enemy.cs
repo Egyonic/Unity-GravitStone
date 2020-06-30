@@ -6,55 +6,41 @@ public abstract class Enemy : MonoBehaviour
 {
     public int health;
     public int damage;
-    public float flashTime;
-    //public GameObject bloodEffect;
-    //public GameObject dropCoin;
-    //public GameObject floatPoint;
+    //public float flashTime;
 
-    private SpriteRenderer sr; 
-    private Color originalColor;
+    public Animator myAnim;    //动画组件
+
+    //private SpriteRenderer sr; 
+    //private Color originalColor;
     private PlayerHealth playerHealth;
 
     // Start is called before the first frame update
     public void Start()
     {
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
-        sr = GetComponent<SpriteRenderer>();
-        originalColor = sr.color;
+        myAnim = GetComponent<Animator>();
+        //sr = GetComponent<SpriteRenderer>();
+        //originalColor = sr.color;
     }
 
     // Update is called once per frame
     public void Update()
     {
         if (health <= 0)
-        {
-            //Instantiate(dropCoin, transform.position, Quaternion.identity);
+        {  
             Destroy(gameObject);
         }
     }
 
     public void TakeDamage(int damage)
     {
-        //GameObject gb = Instantiate(floatPoint, transform.position, Quaternion.identity) as GameObject;
-        //gb.transform.GetChild(0).GetComponent<TextMesh>().text = damage.ToString();
+       
         health -= damage;
-        FlashColor(flashTime);
-        //Instantiate(bloodEffect, transform.position, Quaternion.identity);
-        GameController.camShake.Shake();
+        //FlashColor(flashTime);
+
+        //GameController.camShake.Shake();
     }
 
-    void FlashColor(float time)
-    {
-        sr.color = Color.red;
-        Invoke("ResetColor", time);
-        Debug.Log("dkfjdk");
-        Debug.Log("zhengshuo");
-    }
-
-    void ResetColor()
-    {
-        sr.color = originalColor;
-    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -63,7 +49,10 @@ public abstract class Enemy : MonoBehaviour
             if(playerHealth != null)
             {
                 playerHealth.DamegePlayer(damage);
-            }            
+            }
+            //播放怪物攻击动画
+            myAnim.SetTrigger("Attack");    //触发攻击动画
+            
         }
     }
 }
