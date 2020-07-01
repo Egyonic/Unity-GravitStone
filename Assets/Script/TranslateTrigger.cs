@@ -29,6 +29,7 @@ public class TranslateTrigger : MonoBehaviour
                 if (spaceStone.status == true) {
                     Debug.Log("传送---");
                     other.GetComponentInParent<Transform>().position = destination.position;
+                    SoundManager.PlayPlayerTranslate();
                 }
 
             }

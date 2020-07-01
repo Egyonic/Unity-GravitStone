@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float floatSpeed;    //漂浮速度
     public float floatingGravity;  //飘浮时的重力
 
+    public GameObject AddBloodEffect;   //回血特效
     public int itemAmount;  //道具总数
     public Item[] items; //人物的道具，在Inspector的人物的该脚本组件中编辑
 
@@ -78,7 +79,6 @@ public class PlayerController : MonoBehaviour
             CheckGrounded();   // 检查是否与地面接触
             
             //SwitchAnimation();
-            //OneWayPlatformCheck();
         }
     }
 
@@ -88,7 +88,6 @@ public class PlayerController : MonoBehaviour
                    myFeet.IsTouchingLayers(LayerMask.GetMask("OneWayPlatform"));
         
     }
-
 
     // 左右移动时角色的左右翻转
     void Flip()
@@ -133,6 +132,9 @@ public class PlayerController : MonoBehaviour
             if (item.name=="回复药水" && item.count>0) {
                 playerHealth.HealPlayer();  //回复玩家血量
                 item.count--;
+                // 播放回血特效
+                Instantiate(AddBloodEffect, transform.position, Quaternion.identity);
+                SoundManager.PlayAddBlood();    //播放回血声音
             }
         }
     }
@@ -145,8 +147,9 @@ public class PlayerController : MonoBehaviour
             items[currentItemId].isUsing = false;
             int newId = (currentItemId + 1) % itemAmount;
             currentItemId = newId;
-
+            
             ItemUI.currentItem = items[newId];//UI跟新
+            SoundManager.PlaySwitchItem();  //播放声音
             // 跟新重力区域控制器的物品信息
             GravityAreaController.currentItem = items[newId];
             // 传送装置保存的物品信息

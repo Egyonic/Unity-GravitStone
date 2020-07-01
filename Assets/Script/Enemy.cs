@@ -46,7 +46,8 @@ public abstract class Enemy : MonoBehaviour
                 playerHealth.DamegePlayer(damage);
             }
             //播放怪物攻击动画
-            myAnim.SetTrigger("Attack");    //触发攻击动画
+            myAnim.SetTrigger("Attack");    //触发怪物攻击动画
+            SoundManager.PlayHitByEnemy();  //播放声音
             
         }
     }

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1769002679055931195}
   - component: {fileID: 1769002679055931172}
   - component: {fileID: 8839371157230761777}
+  - component: {fileID: 675650122}
   m_Layer: 10
   m_Name: playerTest
   m_TagString: Player
@@ -168,7 +169,8 @@ MonoBehaviour:
   restoreTime: 2
   floatSpeed: 5
   floatingGravity: 0
-  healValue: 1
+  AddBloodEffect: {fileID: 7614066395798952122, guid: 2744de25f1b38284cbd03c1daa6bc827,
+    type: 3}
   itemAmount: 3
   items:
   - id: 0
@@ -185,7 +187,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 1889923601f698b4191169ee46e2d4cb, type: 3}
   - id: 2
     name: "\u56DE\u590D\u836F\u6C34"
-    count: 2
+    count: 5
     status: 0
     isUsing: 0
     sprite: {fileID: 21300000, guid: af7c123cb1d14e04f9faf77a30d22b06, type: 3}
@@ -202,10 +204,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
-  blinks: 2
-  time: 1
+  healValue: 1
+  blinks: 3
+  time: 0.2
   dieTime: 0.2
   hitBoxCdTime: 0.2
+--- !u!60 &675650122
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3716383800006684708}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 2}
+    newSize: {x: 1, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.6888771, y: 0.17334473}
+      - {x: 0.3578148, y: 0.04724264}
+      - {x: 0.57395935, y: -0.4785998}
+      - {x: 1.1388912, y: -0.34476292}
+      - {x: 1.199543, y: 0.07257366}
 --- !u!1 &8839371158574066929
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,7 +277,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8839371158574066929}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
