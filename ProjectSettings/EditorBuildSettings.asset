@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SeaWorld.unity
     guid: a3ba3c072d2432240906d0b157476d8e
+  - enabled: 1
+    path: Assets/Scenes/test1.unity
+    guid: 8ff43e48cd30a324f9f52aa6cbbe13e4
   m_configObjects: {}

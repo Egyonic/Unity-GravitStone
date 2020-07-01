@@ -11,7 +11,9 @@ public class MainMenu : MonoBehaviour
     public Text progressText;
     public void PlayGame()
     {
-        SceneManager.LoadScene("SeaWorld");
+        //切换到游戏场景
+        //SceneManager.LoadScene("SeaWorld");
+        SceneManager.LoadScene("test1");
     }
 
     public void LoadLevel(int sceneIndex)
