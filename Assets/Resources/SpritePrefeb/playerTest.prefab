@@ -169,7 +169,7 @@ MonoBehaviour:
   restoreTime: 2
   floatSpeed: 5
   floatingGravity: 0
-  AddBloodEffect: {fileID: 7614066395798952122, guid: 2744de25f1b38284cbd03c1daa6bc827,
+  AddBloodEffect: {fileID: 1173987414627921084, guid: 2744de25f1b38284cbd03c1daa6bc827,
     type: 3}
   itemAmount: 3
   items:
@@ -178,19 +178,19 @@ MonoBehaviour:
     count: 1
     status: 0
     isUsing: 0
-    sprite: {fileID: 21300000, guid: 608bcdaf2b333544b9e347581b9fd8ec, type: 3}
+    sprite: {fileID: 21300000, guid: c1f34fa9325da0c489998161dfbed163, type: 3}
   - id: 1
     name: "\u7A7A\u95F4\u77F3"
     count: 1
     status: 0
     isUsing: 0
-    sprite: {fileID: 21300000, guid: 1889923601f698b4191169ee46e2d4cb, type: 3}
+    sprite: {fileID: 21300000, guid: 8363e5c718764d54bb087076d84ab788, type: 3}
   - id: 2
     name: "\u56DE\u590D\u836F\u6C34"
-    count: 5
+    count: 10
     status: 0
     isUsing: 0
-    sprite: {fileID: 21300000, guid: af7c123cb1d14e04f9faf77a30d22b06, type: 3}
+    sprite: {fileID: 21300000, guid: 1cb7081641f7d094f9de41d73aaf05da, type: 3}
 --- !u!114 &8839371157230761777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,7 +208,7 @@ MonoBehaviour:
   blinks: 3
   time: 0.2
   dieTime: 0.2
-  hitBoxCdTime: 0.2
+  hitBoxCdTime: 0.3
 --- !u!60 &675650122
 PolygonCollider2D:
   m_ObjectHideFlags: 0

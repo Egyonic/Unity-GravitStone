@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBat : Enemy
-{
+public class EnemyBat : EnemyNoAnim {
     public float speed;
     public float startWaitTime;
     private float waitTime;

@@ -2,55 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
+public class EnemyNoAnim : MonoBehaviour
 {
     public int health;
     public int damage;
     public int damageByRock;
 
-    public Animator myAnim;    //动画组件
-
     private PlayerHealth playerHealth;
 
     // Start is called before the first frame update
-    public void Start()
-    {
+    public void Start() {
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
-        myAnim = GetComponent<Animator>();
 
     }
 
     // Update is called once per frame
-    public void Update()
-    {
-        if (health <= 0)
-        {  
+    public void Update() {
+        if (health <= 0) {
             Destroy(gameObject);
         }
     }
 
-    public void TakeDamage(int damage)
-    {
-       
+    public void TakeDamage(int damage) {
+
         health -= damage;
 
         //GameController.camShake.Shake();
     }
 
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Player") && other.GetType().ToString() == "UnityEngine.CapsuleCollider2D")
-        {
-            if(playerHealth != null)
-            {
+    void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.CompareTag("Player") && other.GetType().ToString() == "UnityEngine.CapsuleCollider2D") {
+            if (playerHealth != null) {
                 playerHealth.DamegePlayer(damage);
             }
             //播放怪物攻击动画
-            myAnim.SetTrigger("Attack");    //触发怪物攻击动画
             SoundManager.PlayHitByEnemy();  //播放声音
 
-        } 
+        }
         //怪物撞击到石头会扣血
         else if (other.gameObject.CompareTag("RockBlock")) {
             TakeDamage(damageByRock);

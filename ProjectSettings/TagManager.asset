@@ -7,6 +7,7 @@ TagManager:
   - CameraShake
   - Enemy
   - effectAreaTrigger
+  - RockBlock
   layers:
   - Default
   - TransparentFX
