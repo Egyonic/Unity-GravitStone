@@ -19,7 +19,7 @@ public class EnemyMonster : Enemy
     public void Start()
     {
         base.Start();
-        myAnim.SetBool("IsWalk", true); //设置动画初始状态为行走
+        //myAnim.SetBool("Walk", true); //设置动画初始状态为行走
         waitTime = startWaitTime;
         movePos.position = GetRandomPos();
     }
@@ -30,19 +30,19 @@ public class EnemyMonster : Enemy
         //调用父类的Update()方法
         base.Update();
         getAnimState(); //获取动画状态值
-        Debug.Log("IsWalk"+myAnim.GetBool("IsWalk"));
-        Debug.Log("IsIdle" + myAnim.GetBool("IsIdle"));
+        Debug.Log("Walk"+myAnim.GetBool("Walk"));
+        Debug.Log("Idle" + myAnim.GetBool("Idle"));
 
         transform.position = Vector2.MoveTowards(transform.position, movePos.position, speed * Time.deltaTime);
         //myAnim.SetBool("IsWalk", true); //开始播放行走动画
 
         // 已经移动到了指定位置
         if (Vector2.Distance(transform.position, movePos.position) < 0.01f) {
-            myAnim.SetBool("IsWalk", false);
-            myAnim.SetBool("IsIdle", true);
+            myAnim.SetBool("Walk", false);
+            myAnim.SetBool("Idle", true);
             if (waitTime <= 0) {
                 // 等待时间已经已经过了，前往下个位置
-                //myAnim.SetBool("IsWalk", true);
+                //myAnim.SetBool("Walk", true);
                 movePos.position = GetRandomPos();
                 waitTime = startWaitTime;
             }
@@ -53,8 +53,8 @@ public class EnemyMonster : Enemy
             }
         }//还在移动的过程中
         else {
-            myAnim.SetBool("IsWalk", true);
-            myAnim.SetBool("IsIdle", false);
+            myAnim.SetBool("Walk", true);
+            myAnim.SetBool("Idle", false);
         }
     }
 
@@ -64,7 +64,7 @@ public class EnemyMonster : Enemy
     }
 
     void getAnimState() {
-        IsWalk = myAnim.GetBool("IsWalk");
-        IsIdle = myAnim.GetBool("IsIdle");
+        IsWalk = myAnim.GetBool("Walk");
+        IsIdle = myAnim.GetBool("Idle");
     }
 }

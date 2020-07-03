@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     public int itemAmount;  //道具总数
     public Item[] items; //人物的道具，在Inspector的人物的该脚本组件中编辑
 
+    //控制中间房间的移动的控制器
+    public static bool[] CenterRoomTrigger;
     private PlayerHealth playerHealth;  //控制玩家血量的组件
     private Rigidbody2D myRigidbody;
     private Animator myAnim;    //人物动画
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>(); //获得血量控制器
         playerGravity = myRigidbody.gravityScale;
         isFloating = false;
+        CenterRoomTrigger = new bool[3];
 
         //道具相关的设置
         ItemUI.currentItem = items[0];

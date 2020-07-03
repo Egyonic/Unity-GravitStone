@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -55,5 +56,9 @@ public abstract class Enemy : MonoBehaviour
         else if (other.gameObject.CompareTag("RockBlock")) {
             TakeDamage(damageByRock);
         }
+    }
+
+    public static explicit operator Enemy(GameObject v) {
+        throw new NotImplementedException();
     }
 }
