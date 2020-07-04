@@ -44,7 +44,7 @@ public class PlateMove : MonoBehaviour
             //speedY = 1.0f;
             plateFall.setGravity(fallSpeed * -1.0f);
             Debug.Log("玩家离开了机关");
-            Debug.Log("玩家胶囊碰撞体");
+            //Debug.Log("玩家胶囊碰撞体");
         }
     }
 
@@ -54,7 +54,7 @@ public class PlateMove : MonoBehaviour
             //speedY = -1.0f;
             plateFall.setGravity(fallSpeed*1.0f);
             Debug.Log("玩家进入机关");
-            Debug.Log("玩家胶囊碰撞体");
+            //Debug.Log("玩家胶囊碰撞体");
         }
     }
 

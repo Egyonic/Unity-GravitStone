@@ -12,8 +12,8 @@ public class EnemyMonster : Enemy
     public Transform leftDownPos;
     public Transform rightUpPos;
 
-    private bool IsWalk;
-    private bool IsIdle;
+    private bool Walk;
+    private bool Idle;
 
     // Start is called before the first frame update
     public void Start()
@@ -30,8 +30,8 @@ public class EnemyMonster : Enemy
         //调用父类的Update()方法
         base.Update();
         getAnimState(); //获取动画状态值
-        Debug.Log("Walk"+myAnim.GetBool("Walk"));
-        Debug.Log("Idle" + myAnim.GetBool("Idle"));
+        //Debug.Log("Walk"+myAnim.GetBool("Walk"));
+        //Debug.Log("Idle" + myAnim.GetBool("Idle"));
 
         transform.position = Vector2.MoveTowards(transform.position, movePos.position, speed * Time.deltaTime);
         //myAnim.SetBool("IsWalk", true); //开始播放行走动画
@@ -64,7 +64,7 @@ public class EnemyMonster : Enemy
     }
 
     void getAnimState() {
-        IsWalk = myAnim.GetBool("Walk");
-        IsIdle = myAnim.GetBool("Idle");
+        Walk = myAnim.GetBool("Walk");
+        Idle = myAnim.GetBool("Idle");
     }
 }

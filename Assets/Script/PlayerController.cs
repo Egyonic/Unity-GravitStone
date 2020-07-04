@@ -11,13 +11,14 @@ public class PlayerController : MonoBehaviour
     public float restoreTime;
     public float floatSpeed;    //漂浮速度
     public float floatingGravity;  //飘浮时的重力
+    public Vector3 EffectOffset;
 
     public GameObject AddBloodEffect;   //回血特效
     public int itemAmount;  //道具总数
     public Item[] items; //人物的道具，在Inspector的人物的该脚本组件中编辑
 
     //控制中间房间的移动的控制器
-    public static bool[] CenterRoomTrigger;
+    public  bool[] CenterRoomTrigger;
     private PlayerHealth playerHealth;  //控制玩家血量的组件
     private Rigidbody2D myRigidbody;
     private Animator myAnim;    //人物动画
@@ -31,10 +32,6 @@ public class PlayerController : MonoBehaviour
     //private bool isInStoneChangeStatus; 
 
     private bool isFloating;    //玩家是否在悬浮
-    private bool isJumping;
-    private bool isFalling;
-    private bool isDoubleJumping;
-    private bool isDoubleFalling;
 
     private float playerGravity;
 
@@ -42,12 +39,14 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
-        myAnim = GetComponent<Animator>();    //设置人物的动画控制器
+        //myAnim = GetComponent<Animator>();    //设置人物的动画控制器
+        myAnim = GetComponentInChildren<Animator>();
         myFeet = GetComponent<BoxCollider2D>(); //脚步触发器
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>(); //获得血量控制器
         playerGravity = myRigidbody.gravityScale;
         isFloating = false;
         CenterRoomTrigger = new bool[3];
+        //EffectOffset = new Vector3(0, 0.5, 0);
 
         //道具相关的设置
         ItemUI.currentItem = items[0];
@@ -100,12 +99,12 @@ public class PlayerController : MonoBehaviour
         {
             if(myRigidbody.velocity.x > 0.1f)
             {
-                transform.localRotation = Quaternion.Euler(0, 0, 0);
+                transform.localRotation = Quaternion.Euler(0, 180, 0);
             }
 
             if (myRigidbody.velocity.x < -0.1f)
             {
-                transform.localRotation = Quaternion.Euler(0, 180, 0);
+                transform.localRotation = Quaternion.Euler(0, 0, 0);
             }
         }
     }
@@ -117,7 +116,15 @@ public class PlayerController : MonoBehaviour
         Vector2 playerVel = new Vector2(moveDir * runSpeed, myRigidbody.velocity.y);
         myRigidbody.velocity = playerVel;
         bool plyerHasXAxisSpeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
-        //myAnim.SetBool("Run", plyerHasXAxisSpeed);
+        if (plyerHasXAxisSpeed) {
+            myAnim.SetBool("Walk", plyerHasXAxisSpeed);
+            myAnim.SetBool("Idle", !plyerHasXAxisSpeed);
+        }
+        else {
+            myAnim.SetBool("Walk", plyerHasXAxisSpeed);
+            myAnim.SetBool("Idle", !plyerHasXAxisSpeed);
+        }
+            
     }
 
     /*
@@ -136,7 +143,7 @@ public class PlayerController : MonoBehaviour
                 playerHealth.HealPlayer();  //回复玩家血量
                 item.count--;
                 // 播放回血特效
-                Instantiate(AddBloodEffect, transform.position, Quaternion.identity);
+                Instantiate(AddBloodEffect, transform.position+EffectOffset, Quaternion.identity);
                 SoundManager.PlayAddBlood();    //播放回血声音
             }
         }
@@ -238,57 +245,15 @@ public class PlayerController : MonoBehaviour
     //实现动画之间的切换
     void SwitchAnimation()
     {
-        myAnim.SetBool("Idle", false);
-        if (myAnim.GetBool("Jump"))
-        {
-            if(myRigidbody.velocity.y < 0.0f)
-            {
-                myAnim.SetBool("Jump", false);
-                myAnim.SetBool("Fall", true);
-            }
-        }
-        else if(isGround)
-        {
-            myAnim.SetBool("Fall", false);
+        //myAnim.SetBool("Idle", false);
+
+
+        if(myRigidbody.velocity.x < 0.01f) {
             myAnim.SetBool("Idle", true);
-        }
-
-        if (myAnim.GetBool("DoubleJump"))
-        {
-            if (myRigidbody.velocity.y < 0.0f)
-            {
-                myAnim.SetBool("DoubleJump", false);
-                myAnim.SetBool("DoubleFall", true);
-            }
-        }
-        else if (isGround)
-        {
-            myAnim.SetBool("DoubleFall", false);
-            myAnim.SetBool("Idle", true);
+            myAnim.SetBool("Walk", false);
         }
     }
 
 
 
-    void RestorePlayerLayer()
-    {
-        if(!isGround && gameObject.layer != LayerMask.NameToLayer("Player"))
-        {
-            gameObject.layer = LayerMask.NameToLayer("Player");
-        }
-    }
-
-    void CheckAirStatus()
-    {
-        isJumping = myAnim.GetBool("Jump");
-        isFalling = myAnim.GetBool("Fall");
-        isDoubleJumping = myAnim.GetBool("DoubleJump");
-        isDoubleFalling = myAnim.GetBool("DoubleFall");
-        //isClimbing = myAnim.GetBool("Climbing");
-        //Debug.Log("isJumping:" + isJumping);
-        //Debug.Log("isFalling:" + isFalling);
-        //Debug.Log("isDoubleJumping:" + isDoubleJumping);
-        //Debug.Log("isDoubleFalling:" + isDoubleFalling);
-        //Debug.Log("isClimbing:" + isClimbing);
-    }
 }

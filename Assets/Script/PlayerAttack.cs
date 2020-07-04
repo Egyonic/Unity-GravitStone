@@ -14,7 +14,7 @@ public class PlayerAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        anim = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
+        anim = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>();
         collider2D = GetComponent<PolygonCollider2D>();
     }
 
@@ -48,9 +48,20 @@ public class PlayerAttack : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.CompareTag("Enemy"))
+        Debug.Log("碰到怪物");
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            //other.GetComponent<Enemy>().TakeDamage(damage);
+            Transform t = other.gameObject.GetComponentInParent<Transform>();
+            
+            //if(other.gameObject.transform.position.x > transform.position.x) {
+            //    t.localRotation = Quaternion.Euler(0, 180, 0);
+            //    
+            //}
+            //else {
+            //    t.localRotation = Quaternion.Euler(0, 0, 0);
+            //}
+            other.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+            Debug.Log("攻击了怪物");
         }
     }
 }

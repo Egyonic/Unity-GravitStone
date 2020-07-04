@@ -64,15 +64,15 @@ public class PlayerHealth : MonoBehaviour
             //anim.SetTrigger("Die");   播放死亡动画
             Invoke("KillPlayer", dieTime);
         }
-        BlinkPlayer(blinks, time);
-        polygonCollider2D.enabled = false;
-        StartCoroutine(ShowPlayerHitBox());
+        //BlinkPlayer(blinks, time);
+        //polygonCollider2D.enabled = false;
+        //StartCoroutine(ShowPlayerHitBox());
     }
 
     IEnumerator ShowPlayerHitBox()
     {
         yield return new WaitForSeconds(hitBoxCdTime);
-        polygonCollider2D.enabled = true;
+        //polygonCollider2D.enabled = true;
     }
 
     void KillPlayer()

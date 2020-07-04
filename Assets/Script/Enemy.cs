@@ -17,7 +17,7 @@ public abstract class Enemy : MonoBehaviour
     public void Start()
     {
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
-        myAnim = GetComponent<Animator>();
+        myAnim = GetComponentInChildren<Animator>();
 
     }
 
@@ -43,7 +43,16 @@ public abstract class Enemy : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && other.GetType().ToString() == "UnityEngine.CapsuleCollider2D")
         {
-            if(playerHealth != null)
+            //翻转效果
+            if (other.gameObject.transform.position.x < transform.position.x) {
+                transform.localRotation = Quaternion.Euler(0, 180, 0);
+
+            }
+            else {
+                transform.localRotation = Quaternion.Euler(0, 0, 0);
+            }
+
+            if (playerHealth != null)
             {
                 playerHealth.DamegePlayer(damage);
             }
