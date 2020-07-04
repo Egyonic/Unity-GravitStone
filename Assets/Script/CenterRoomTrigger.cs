@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CenterRoomTrigger : MonoBehaviour
 {
-    //public int triggerId;
+    public int triggerId;
     private CenterRoom centerRoom;  //中间房间的CenterRoom脚本对象
     public static PlayerController playerController;
 
@@ -31,18 +31,18 @@ public class CenterRoomTrigger : MonoBehaviour
                 centerRoom.destroyCollider2();  //房间下移到最下方
             }
             //只有第一个中间的触发器的情况
-            if (playerController.CenterRoomTrigger[0]) {
+            if (playerController.CenterRoomTrigger[0] && triggerId==0) {
                 centerRoom.RoomTriggers[0] = true;
                 centerRoom.destroyCollider1();  //房间下移到中间
                 centerRoom.setStatueVisible(0);
             }
 
-            if (playerController.CenterRoomTrigger[1]) {
+            if (playerController.CenterRoomTrigger[1] && triggerId==1) {
                 centerRoom.RoomTriggers[1] = true;
                 centerRoom.setStatueVisible(1);
             }
 
-            if (playerController.CenterRoomTrigger[2]) {
+            if (playerController.CenterRoomTrigger[2] && triggerId==2) {
                 centerRoom.RoomTriggers[2] = true;
                 centerRoom.setStatueVisible(2);
             }

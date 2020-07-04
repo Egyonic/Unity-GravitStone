@@ -13,7 +13,7 @@ public class MainMenu : MonoBehaviour
     {
         //切换到游戏场景
         //SceneManager.LoadScene("SeaWorld");
-        SceneManager.LoadScene("test1");
+        SceneManager.LoadScene("SeaWorldTest");
     }
 
     public void LoadLevel(int sceneIndex)

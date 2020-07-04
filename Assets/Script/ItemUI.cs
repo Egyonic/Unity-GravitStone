@@ -19,17 +19,20 @@ public class ItemUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        itemImage.sprite = currentItem.sprite;  //设置图像
-        //根据状态值设置道具的作用对象
-        string status = currentItem.status ? "自身":"环境";
-        if (currentItem.name == "回复药水")
-            status = currentItem.count.ToString();
-        itemText.text = currentItem.name+" "+status;
-        if (currentItem.name == "回复药水")
-            itmeUsingText.text = "";    //回复药水不需要显示使用状态
-        else
-            itmeUsingText.text = currentItem.isUsing ? "开" : "关";
-        // 恢复药水需要单独设置
+        if(currentItem!= null) {
+            itemImage.sprite = currentItem.sprite;  //设置图像
+                                                    //根据状态值设置道具的作用对象
+            string status = currentItem.status ? "自身" : "环境";
+            if (currentItem.name == "回复药水")
+                status = currentItem.count.ToString();
+            itemText.text = currentItem.name + " " + status;
+            if (currentItem.name == "回复药水")
+                itmeUsingText.text = "";    //回复药水不需要显示使用状态
+            else
+                itmeUsingText.text = currentItem.isUsing ? "开" : "关";
+            // 恢复药水需要单独设置
+        }
+
 
     }
 }
